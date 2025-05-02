@@ -1,4 +1,4 @@
-// 투자자 데이터
+// 투자자 데이터 (10명 모두 포함)
 const investors = [
   {
     id: 'warren-buffett',
@@ -90,7 +90,96 @@ const investors = [
       { symbol: 'TLT', name: 'Treasury Bond ETF', score: 85, rank: 3 }
     ]
   },
-  // 나머지 투자자 데이터...
+  {
+    id: 'george-soros',
+    name: '조지 소로스',
+    nameEn: 'George Soros',
+    image: 'https://via.placeholder.com/200',
+    philosophy: '시장 심리와 자기반사성',
+    isAlive: true,
+    age: '94세',
+    performance: '연 30%대 복리(1970~2000)',
+    assets: '$70억',
+    characteristics: '영란은행 공략',
+    portfolioLink: '최근 포트폴리오 보기',
+    topStocks: [
+      { symbol: 'META', name: 'Meta Platforms', score: 88, rank: 1 },
+      { symbol: 'RIVN', name: 'Rivian', score: 84, rank: 2 },
+      { symbol: 'AMZN', name: 'Amazon', score: 82, rank: 3 }
+    ]
+  },
+  {
+    id: 'jim-simons',
+    name: '짐 사이먼스',
+    nameEn: 'Jim Simons',
+    image: 'https://via.placeholder.com/200',
+    philosophy: '수학 기반 퀀트 투자',
+    isAlive: true,
+    age: '87세',
+    performance: '연 66% 복리(1988~2018)',
+    assets: '$310억',
+    characteristics: '르네상스 테크놀로지',
+    portfolioLink: '최근 포트폴리오 보기',
+    topStocks: [
+      { symbol: 'NVDA', name: 'NVIDIA', score: 94, rank: 1 },
+      { symbol: 'ASML', name: 'ASML Holding', score: 92, rank: 2 },
+      { symbol: 'AVGO', name: 'Broadcom', score: 90, rank: 3 }
+    ]
+  },
+  {
+    id: 'john-templeton',
+    name: '존 템플턴',
+    nameEn: 'John Templeton',
+    image: 'https://via.placeholder.com/200',
+    philosophy: '글로벌 투자와 역발상',
+    isAlive: false,
+    age: '95세',
+    performance: '연 15%대 복리',
+    assets: '수억불',
+    characteristics: '글로벌 분산투자',
+    portfolioLink: '마지막 포트폴리오 보기',
+    topStocks: [
+      { symbol: 'BABA', name: 'Alibaba', score: 87, rank: 1 },
+      { symbol: 'TSM', name: 'Taiwan Semiconductor', score: 85, rank: 2 },
+      { symbol: 'SONY', name: 'Sony Group', score: 83, rank: 3 }
+    ]
+  },
+  {
+    id: 'philip-fisher',
+    name: '필립 피셔',
+    nameEn: 'Philip Fisher',
+    image: 'https://via.placeholder.com/200',
+    philosophy: '기업 내부 조사와 품질',
+    isAlive: false,
+    age: '96세',
+    performance: '수십년간 시장 상회',
+    assets: '수억불',
+    characteristics: '성장주 투자',
+    portfolioLink: '마지막 포트폴리오 보기',
+    topStocks: [
+      { symbol: 'GOOGL', name: 'Alphabet', score: 93, rank: 1 },
+      { symbol: 'ADBE', name: 'Adobe', score: 88, rank: 2 },
+      { symbol: 'INTU', name: 'Intuit', score: 85, rank: 3 }
+    ]
+  },
+  {
+    id: 'carl-icahn',
+    name: '칼 아이칸',
+    nameEn: 'Carl Icahn',
+    image: 'https://via.placeholder.com/200',
+    philosophy: '주주 가치 개선 행동주의',
+    isAlive: true,
+    age: '89세',
+    performance: '행동주의로 시장 압도',
+    assets: '$70억',
+    characteristics: '경영권 개입',
+    portfolioLink: '최근 포트폴리오 보기',
+    topStocks: [
+      { symbol: 'CVI', name: 'CVR Energy', score: 89, rank: 1 },
+      { symbol: 'XRX', name: 'Xerox Holdings', score: 86, rank: 2 },
+      { symbol: 'OXY', name: 'Occidental Petroleum', score: 84, rank: 3 }
+    ]
+  }
 ];
 
 // 메달 컴포넌트
@@ -110,56 +199,64 @@ class Medal extends React.Component {
   }
 }
 
-// 투자자 카드 컴포넌트
+// 투자자 카드 컴포넌트 (러시모어 스타일)
 class InvestorCard extends React.Component {
   render() {
     const { investor, onViewDetails } = this.props;
     
     return (
       <div 
-        className="group cursor-pointer transition-all hover:shadow-lg bg-white rounded-lg overflow-hidden" 
+        className="group cursor-pointer transition-all hover:shadow-lg bg-white rounded-lg overflow-hidden transform hover:-translate-y-1" 
         onClick={() => onViewDetails(investor.id)}
+        style={{transition: "all 0.3s ease"}}
       >
-        <div className="relative h-48">
-          {/* 그라데이션 오버레이 */}
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black opacity-70 z-10"></div>
-          
-          {/* 투자자 이미지 */}
+        <div className="relative h-48" style={{background: "linear-gradient(to bottom, #f0f9ff, #e2e8f0)"}}>
+          {/* 투자자 이미지 - 얼굴만 동동 떠 있는 스타일 */}
           <img 
             src={investor.image} 
             alt={investor.name} 
-            className="w-full h-full object-cover object-top"
+            className="absolute w-32 h-32 rounded-full border-4 border-white shadow-lg"
+            style={{
+              top: "30px",
+              left: "50%",
+              transform: "translateX(-50%)",
+              objectFit: "cover"
+            }}
           />
           
           {/* 포트폴리오 링크 */}
-          <div className="absolute top-2 right-2 bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-full">
+          <div className="absolute top-2 right-2 bg-blue-100 text-blue-700 text-xs px-2 py-0.5 rounded-full">
             {investor.portfolioLink}
           </div>
           
-          {/* 이름과 핵심 정보 오버레이 */}
-          <div className="absolute bottom-0 left-0 right-0 p-3 z-20 text-white">
-            <h3 className="text-xl font-bold">{investor.name}</h3>
-            <p className="text-xs text-white opacity-90">{investor.philosophy}</p>
+          {/* 이름과 철학 */}
+          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-gray-800 to-transparent p-3 pt-6">
+            <h3 className="text-lg font-bold text-white text-center">{investor.name}</h3>
+            <p className="text-xs text-white opacity-90 text-center">{investor.philosophy}</p>
           </div>
         </div>
         
         <div className="p-3">
-          <div className="text-xs grid grid-cols-2 gap-2 mb-2">
-            <div>
-              <span className="text-gray-500">연령:</span> {investor.age}
+          <div className="text-xs grid grid-cols-2 gap-x-1 gap-y-0.5 mb-2">
+            <div className="flex justify-between">
+              <span className="text-gray-500">연령:</span>
+              <span>{investor.age.split(' ')[0]}</span>
             </div>
-            <div>
-              <span className="text-gray-500">자산:</span> {investor.assets}
+            <div className="flex justify-between">
+              <span className="text-gray-500">자산:</span>
+              <span>{investor.assets}</span>
             </div>
-            <div className="col-span-2">
-              <span className="text-gray-500">성과:</span> {investor.performance}
+            <div className="col-span-2 flex justify-between">
+              <span className="text-gray-500">성과:</span>
+              <span className="text-right flex-1 pl-1">{investor.performance}</span>
             </div>
-            <div className="col-span-2">
-              <span className="text-gray-500">특징:</span> {investor.characteristics}
+            <div className="col-span-2 flex justify-between">
+              <span className="text-gray-500">특징:</span>
+              <span className="text-right flex-1 pl-1">{investor.characteristics}</span>
             </div>
           </div>
           
-          <div className="border-t pt-2 mt-2">
+          <div className="border-t pt-2 mt-1">
             <div className="text-xs font-medium mb-1">추천 종목</div>
             <div className="space-y-1">
               {investor.topStocks.map((stock, index) => (
@@ -190,7 +287,7 @@ class HomePage extends React.Component {
           <h2 className="text-lg text-gray-600">부자 따라 투자하기</h2>
         </header>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
           {investors.map(investor => (
             <InvestorCard 
               key={investor.id} 
@@ -219,15 +316,15 @@ class InvestorDetailPage extends React.Component {
         </button>
         
         <div className="bg-white rounded-lg shadow-md overflow-hidden mb-6">
-          <div className="h-56 relative">
-            {/* 이미지 배경 */}
-            <div className="absolute inset-0 overflow-hidden">
+          <div className="h-56 relative" style={{background: "linear-gradient(to bottom, #f0f9ff, #e2e8f0)"}}>
+            {/* 이미지 - 러시모어 스타일 */}
+            <div className="absolute top-4 left-1/2 transform -translate-x-1/2">
               <img 
                 src={investor.image} 
                 alt={investor.name} 
-                className="w-full h-full object-cover object-top"
+                className="w-32 h-32 rounded-full border-4 border-white shadow-lg"
+                style={{objectFit: "cover"}}
               />
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black opacity-70"></div>
             </div>
             
             {/* 포트폴리오 링크 */}
@@ -241,14 +338,10 @@ class InvestorDetailPage extends React.Component {
             </div>
             
             {/* 투자자 정보 */}
-            <div className="absolute bottom-0 left-0 p-6 text-white">
-              <div className="flex flex-col gap-1">
-                <div className="flex items-end gap-2">
-                  <h1 className="text-4xl font-bold">{investor.name}</h1>
-                  <span className="text-xl opacity-80">({investor.nameEn})</span>
-                </div>
-                <p className="text-lg opacity-90">{investor.philosophy}</p>
-              </div>
+            <div className="absolute bottom-0 left-0 right-0 p-6 text-center">
+              <h1 className="text-3xl font-bold text-gray-800">{investor.name}</h1>
+              <p className="text-gray-600">({investor.nameEn})</p>
+              <p className="text-lg text-gray-700 mt-1">{investor.philosophy}</p>
             </div>
           </div>
           
